@@ -10,7 +10,7 @@ Une section par test en échec : renseignez ses quatre champs.
 
 **Règle du module en jeu** : Lorsque l'on ajoute un élément en base de données, le provider se charge de récupérer la donnée et le processor de faire les modifications. Or ici, le provider n'est pas déclaré, la sécurité essaye donc de vérifier une égalité sur un object inexistant (object qui doit normalement être remonté par le provider).
 
-**Correctif** : `provider: OrderProvider::class,` dans la déclaration de l'opération du POST '/orders/{id}/lines'.
+**Correctif** : `provider: OrderProvider::class,` dans la déclaration de l'opération du POST '/orders/{id}/lines' sinon le fichier n'est pas appelé.
 
 ## testAddingALineToAPaidOrderIsAConflict
 
@@ -18,12 +18,13 @@ Une section par test en échec : renseignez ses quatre champs.
 
 **Cause** : Fichier `OrderAddLineProcessor.php` : Ligne : `$order = $this->orderService->findOneById($uriVariables['id'])`;
 
-**Règle du module en jeu** : Nous devons effectuer les opérations de vérification (programmation défensive) le plus tôt possible. On doit donc vérifier que le status de la commande n'est pas 'paid'.
+**Règle du module en jeu** : Nous devons effectuer les opérations de vérification (programmation défensive) le plus tôt possible, donc ici dans le processor. On doit donc vérifier que le status de la commande n'est pas 'paid'.
 
 **Correctif** :
-```if ($order->getStatus() === OrderStatus::Paid)
+```
+   if ($order->getStatus() === OrderStatus::Paid)
 {
-throw new OrderAlreadyPaidException();
+   throw new OrderAlreadyPaidException();
 }
 ``````
 
@@ -67,7 +68,7 @@ throw new OrderAlreadyPaidException();
 
 **Cause** : Fichier : `KitchenTicket.php` / Ligne : dans la déclaration de l'opération de l'API ressource.
 
-**Règle du module en jeu** : La sécurité intervient entre le provider et le processor et envoi les codes d'erreur.
+**Règle du module en jeu** : La sécurité intervient entre le provider et le processor et envoi les codes d'erreur. Et cette dernière ce déclare dans la déclaration de l'opération au niveau de l'entité.
 
 **Correctif** : `security: "is_granted('ROLE_USER')"`
 
