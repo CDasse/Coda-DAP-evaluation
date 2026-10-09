@@ -29,13 +29,13 @@ throw new OrderAlreadyPaidException();
 
 ## testAddingALineToMyOrder
 
-**Symptôme** :
+**Symptôme** : Lorsque l'on ajoute une ligne à la commande, on s'attend à récupérer un total de 2450, or on obtient la valeur 2050.
 
-**Cause** :
+**Cause** : Fichier : OrderService / Ligne : `subtotal: $dish->getPrice()` de la fonction `toLine()`
 
-**Règle du module en jeu** :
+**Règle du module en jeu** : Les soustotaux étant modifié régulièrement, ils n'ont pas leur place dans la base de donnée. Il faut donc les calculer dans les services. Or ici, la multiplication par la quantité à été oubliée.
 
-**Correctif** :
+**Correctif** : `subtotal: $dish->getPrice() * $line->getQuantity(),`
 
 ## testAddingALineWithAZeroQuantityIsUnprocessable
 
