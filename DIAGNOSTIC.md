@@ -69,13 +69,13 @@ throw new OrderAlreadyPaidException();
 
 ## testOpeningAnOrderIgnoresAnAbandonedOne
 
-**Symptôme** :
+**Symptôme** : Lorsque l'on abandonne une commande (soft deleted), cela ne devrait pas nous bloquer pour en ouvrir une autre. Or c'est le cas.
 
-**Cause** :
+**Cause** : Fichier : SoftDeleteFilter / Ligne : return sprintf('%s.deleted_by_id IS NULL', $targetTableAlias);
 
-**Règle du module en jeu** :
+**Règle du module en jeu** : Afin que toutes les requêtes rédigées dans les répository vérifie que les données récupérées ne sont pas soft delted, on crée un filtre commun à tous.
 
-**Correctif** :
+**Correctif** : return sprintf('%s.deleted_at IS NULL', $targetTableAlias);
 
 ## testPayingMyOrderMarksItPaid
 

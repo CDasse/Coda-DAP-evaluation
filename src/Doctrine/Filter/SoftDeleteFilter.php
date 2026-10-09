@@ -20,6 +20,6 @@ final class SoftDeleteFilter extends SQLFilter
 
         // le nom est celui de la colonne en base, pas celui de la propriété PHP : ce fragment
         // part tel quel dans le SQL
-        return sprintf('%s.deleted_by_id IS NULL', $targetTableAlias);
+        return sprintf('%s.deleted_at IS NULL', $targetTableAlias);
     }
 }
