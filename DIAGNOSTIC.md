@@ -54,13 +54,13 @@ Une section par test en échec : renseignez ses quatre champs.
 
 ## testListingKitchenTicketsWithoutTokenIsUnauthorized
 
-**Symptôme** :
+**Symptôme** : Nous souhaitons pouvoir accéder aux tickets en étant forcément connecté.
 
-**Cause** :
+**Cause** : Fichier : KitchenTicket.php / Ligne : dans l'opération de l'API ressource.
 
-**Règle du module en jeu** :
+**Règle du module en jeu** : La sécurité intervient entre le provider et le processor et envoi les codes d'erreur.
 
-**Correctif** :
+**Correctif** : security: "is_granted('ROLE_USER')"
 
 ## testOpeningAnOrderIgnoresAnAbandonedOne
 
