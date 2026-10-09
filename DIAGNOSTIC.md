@@ -4,13 +4,13 @@ Une section par test en échec : renseignez ses quatre champs.
 
 ## testAddingALineToAnUnknownOrderIsNotFound
 
-**Symptôme** :
+**Symptôme** : Lorsque l'on essaye d'ajouter une ligne à une commande qui n'existe pas, on doit obtenir une 404, cependant, on reçoit une 500 `Unable to call method "getCreatedBy" of non-object "object"`
 
-**Cause** :
+**Cause** : Fichier : Order.php / Ligne : déclaration de l'opération du POST
 
-**Règle du module en jeu** :
+**Règle du module en jeu** : Lorsque l'on ajoute un élément en base de données, le provider se charge de récupérer la donnée et le processor de faire les modification. Or ici, le provider n'était pas déclaré.
 
-**Correctif** :
+**Correctif** : `provider: OrderProvider::class,`
 
 ## testAddingALineToAPaidOrderIsAConflict
 
