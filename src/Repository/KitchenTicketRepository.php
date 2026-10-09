@@ -30,8 +30,10 @@ class KitchenTicketRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('k')
             // les bons d'un même paiement partagent leur date d'émission : l'identifiant v7,
             // ordonné dans le temps, les départage de façon stable
+            ->andWhere('k.createdBy = :user')
             ->orderBy('k.createdAt', 'DESC')
             ->addOrderBy('k.id', 'DESC')
+            ->setParameter('user', $user)
             ->getQuery()
             ->getResult();
     }

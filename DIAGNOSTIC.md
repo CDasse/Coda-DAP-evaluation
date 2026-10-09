@@ -44,13 +44,13 @@ Une section par test en échec : renseignez ses quatre champs.
 
 ## testListingKitchenTicketsReturnsMine
 
-**Symptôme** :
+**Symptôme** : Lorsque Bob souhaite accéder à ses tickets, il ne voit pas les deux tickets qui ont été édités pour lui.
 
-**Cause** :
+**Cause** : Fichier : KitchenTicketRepository.php / Ligne : il n'y a pas de tri sur le créateur du ticket.
 
-**Règle du module en jeu** :
+**Règle du module en jeu** : Il est important de filtrer les requêtes SQL sur l'utilisateur lorsque l'on récupère des données personnelles.
 
-**Correctif** :
+**Correctif** : ->andWhere('k.createdBy = :user') + ->setParameter('user', $user)
 
 ## testListingKitchenTicketsWithoutTokenIsUnauthorized
 
