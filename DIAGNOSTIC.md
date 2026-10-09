@@ -34,13 +34,13 @@ Une section par test en échec : renseignez ses quatre champs.
 
 ## testAddingALineWithAZeroQuantityIsUnprocessable
 
-**Symptôme** :
+**Symptôme** : Lorsque l'on essaye d'ajouter une ligne à une commande avec une quantoté de 0, on doit obtenir une 422 or on reçoit une 201. 
 
-**Cause** :
+**Cause** : Fichier : OrderAddLineInput.php / Ligne: #[Assert\PositiveOrNull]
 
-**Règle du module en jeu** :
+**Règle du module en jeu** : Les DTO permettent de réaliser les validations de surface.
 
-**Correctif** :
+**Correctif** : #[Assert\Positive]
 
 ## testListingKitchenTicketsReturnsMine
 
