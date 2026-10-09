@@ -58,7 +58,7 @@ use Symfony\Component\Uid\Uuid;
         // attend aucun ; le 204 vient du null que rend le processor
         provider: OrderProvider::class,
         processor: OrderRemoveLineProcessor::class,
-        security: "is_granted('ROLE_USER') or object.getCreatedBy() == user",
+        security: "is_granted('ROLE_USER') and object.getCreatedBy() == user",
     ),
     new Post(
         uriTemplate: '/orders/{id}/pay',

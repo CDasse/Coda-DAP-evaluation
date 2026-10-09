@@ -86,7 +86,7 @@ Une section par test en échec : renseignez ses quatre champs.
 
 **Symptôme** : Le jeton de rafraîchissement n'est utilisable qu'une unique fois alors que nous souhaitons pouvoir l'utiliser jusqu'à sa date d'expiration.
 
-**Cause** : gesdinet_jwt_refresh_token.yaml / ligne single_use: false
+**Cause** : Fichier gesdinet_jwt_refresh_token.yaml / Ligne single_use: false
 
 **Règle du module en jeu** : Le jeton doit avoir une durée limitée mais le jeton de raffraichissement doit être plus long pour éviter de devoir se connecter systématiquement.
 
@@ -94,10 +94,10 @@ Une section par test en échec : renseignez ses quatre champs.
 
 ## testRemovingALineFromSomeoneElsesOrderIsForbidden
 
-**Symptôme** :
+**Symptôme** : Lorsque Bob essaye d'ajouter une ligne au panier d'Alice, il doit obtenir une 403, cependant il reçoit une 204.
 
-**Cause** :
+**Cause** : Fichier Order.php / Ligne security: "is_granted('ROLE_USER') or object.getCreatedBy() == user"
 
-**Règle du module en jeu** :
+**Règle du module en jeu** : La règle de sécurité est mal configuré car il faut que les deux conditions soient respectées. La sécurité doit intervenir entre le provider et le processor et donc jeter les codes d'erreur.
 
-**Correctif** :
+**Correctif** : security: "is_granted('ROLE_USER') and object.getCreatedBy() == user"
