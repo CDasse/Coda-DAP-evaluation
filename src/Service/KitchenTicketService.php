@@ -40,8 +40,6 @@ class KitchenTicketService
             $issued[] = $kitchenTicket;
         }
 
-        $this->kitchenTicketRepository->flush();
-
         return $issued;
     }
 

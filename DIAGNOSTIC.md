@@ -79,13 +79,13 @@ throw new OrderAlreadyPaidException();
 
 ## testPayingMyOrderMarksItPaid
 
-**Symptôme** :
+**Symptôme** : Lorsque l'on paye une commande, cette dernière ne semble pas enregistrée en base comme payée.
 
-**Cause** :
+**Cause** : Fichier : KitchenTicketService.php / Ligne : $this->kitchenTicketRepository->flush();
 
-**Règle du module en jeu** :
+**Règle du module en jeu** : Lorsque les tickets sont émis, ils fuat les persistes mais on doit attendre que les modifications soient adoptées sur la commande pour flush. Sinon les modifications ne sont jamais adoptées.
 
-**Correctif** :
+**Correctif** : `$this->orderRepository->flush();` dnas la fonction `pay` du fichier `OrderService`.
 
 ## testRefreshingTwiceWithTheSameTokenIsUnauthorized
 
