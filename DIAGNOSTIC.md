@@ -84,13 +84,13 @@ Une section par test en échec : renseignez ses quatre champs.
 
 ## testRefreshingTwiceWithTheSameTokenIsUnauthorized
 
-**Symptôme** :
+**Symptôme** : Le jeton de rafraîchissement n'est utilisable qu'une unique fois alors que nous souhaitons pouvoir l'utiliser jusqu'à sa date d'expiration.
 
-**Cause** :
+**Cause** : gesdinet_jwt_refresh_token.yaml / ligne single_use: false
 
-**Règle du module en jeu** :
+**Règle du module en jeu** : Le jeton doit avoir une durée limitée mais le jeton de raffraichissement doit être plus long pour éviter de devoir se connecter systématiquement.
 
-**Correctif** :
+**Correctif** : single_use: true
 
 ## testRemovingALineFromSomeoneElsesOrderIsForbidden
 
