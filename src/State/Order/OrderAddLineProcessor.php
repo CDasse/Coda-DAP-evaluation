@@ -6,6 +6,8 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\Dto\Order\OrderAddLineInput;
 use App\Dto\Order\OrderDetailsOutput;
+use App\Entity\Enum\OrderStatus;
+use App\Exception\Order\OrderAlreadyPaidException;
 use App\Service\OrderService;
 
 /**
@@ -20,12 +22,19 @@ final class OrderAddLineProcessor implements ProcessorInterface
 
     /**
      * Ajoute la ligne envoyée à la commande portée par l'URL, et sert la commande qui la porte.
+     *
+     * @throws OrderAlreadyPaidException
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): OrderDetailsOutput
     {
         // $data porte l'objet d'entrée désérialisé, pas la commande : celle-ci se retrouve par l'URL.
         // Aucun contrôle de propriété ici : la propriété a déjà été vérifiée par l'opération
         $order = $this->orderService->findOneById($uriVariables['id']);
+
+        if ($order->getStatus() === OrderStatus::Paid)
+        {
+            throw new OrderAlreadyPaidException();
+        }
 
         return $this->orderService->toDetails($this->orderService->addLine($order, $data));
     }

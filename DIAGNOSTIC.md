@@ -14,13 +14,18 @@ Une section par test en échec : renseignez ses quatre champs.
 
 ## testAddingALineToAPaidOrderIsAConflict
 
-**Symptôme** :
+**Symptôme** : Lorsque l'on essaye d'ajouter une ligne à une commande déjà payé, on doit être rejeté par une 409, or l'opération passe en 201
 
-**Cause** :
+**Cause** : Fichier OrderAddLineProcessor.php : Ligne : $order = $this->orderService->findOneById($uriVariables['id']);
 
-**Règle du module en jeu** :
+**Règle du module en jeu** : Nous devons effectuer les opérations de vérification (programmation défensive) le plus tôt possible.
 
 **Correctif** :
+```if ($order->getStatus() === OrderStatus::Paid)
+{
+throw new OrderAlreadyPaidException();
+}
+``````
 
 ## testAddingALineToMyOrder
 
